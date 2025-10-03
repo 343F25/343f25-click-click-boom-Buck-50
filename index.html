@@ -16,9 +16,16 @@
       background-color: wheat;
       border: 0.25rem solid #8EE4D7 ;
     }
+
+    .odd {
+      background-color: #ffcccc;
+    }
+    
   </style>
 </head>
 <body>
+  //added boom
+  <h1 id="boom-text"></h1>
   <table>
     <tbody>
       <tr>
@@ -154,7 +161,8 @@
     const boomSound = document.getElementById('boom')
     let lastSound = clickSound;
 
-    // TODO: 1 - make it such that if any table cell is clicked, the onClick function below is executed
+    const boomText = document.getElementById('boom-text');
+    let showBoom = false; // for toggling text
     
     document.querySelectorAll("td").forEach(td => {
       td.addEventListener("click", onClick);
@@ -168,6 +176,10 @@
         // boom
         boomSound.play();
         lastSound = boomSound
+
+        showBoom = !showBoom;
+        boomText.textContent = showBoom ? "BOOM" : "";
+        
       } else {
         clickSound.play();
         lastSound = clickSound
@@ -175,8 +187,13 @@
 
       console.log(`ev in onClick ${ev}`)
       // TODO: 2 - REMOVE THE TABLE CELL THAT WAS CLICKED
-        ev.target.style.backgroundColor = "black"; //ev.remove was being buggy and only filling towards the right side
-
+      ev.target.style.backgroundColor = "black"; //ev.remove was being buggy and only filling towards the right side
+      const row = ev.target.parentElement;
+      if (row.children.length % 2 === 1) {
+        row.classList.add("odd");
+      } else {
+        row.classList.remove("odd");
+      }
     }
   </script>
 </body>
